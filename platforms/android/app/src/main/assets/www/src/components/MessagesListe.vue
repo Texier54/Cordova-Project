@@ -1,44 +1,25 @@
 <template>
 
-  <div>
+  <v-ons-page>
 
-    <nav class="navbar is-primary is-fixed-top">
-      <div class="navbar-item">
-        <a href="#/conversations" class="button is-small">
-          <span class="icon">
-            <i class="icon-angle-left"></i>
-          </span>
-          <span>Retour</span>
-        </a>
-      </div>
+    <v-ons-pull-hook :action="loadItem" @changestate="state = $event.state">
+      <span v-show="state === 'initial'"> Pull to refresh </span>
+      <span v-show="state === 'preaction'"> Release </span>
+      <span v-show="state === 'action'"> Loading... </span>
+    </v-ons-pull-hook>
 
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <button @click="refresh" class="button is-small is-danger">
-              Rafraichir
-          </button>
-        </div> 
-      </div>
+    <v-ons-back-button><a class="btn" href="#/conversations">Retour</a></v-ons-back-button>
 
-    </nav>
 
-    <section class="section coop-accueil">
-      <div class="channel">
+    <v-ons-list>
+      <v-ons-list-header>Messages</v-ons-list-header>
+      <message v-for="unMessage in liste" :mess="unMessage"></message>
+    </v-ons-list>
+    
+    <input @keyup.enter="envoyer" v-model="message" width="100%" placeholder="Entrez votre message et appuyez sur entrée" type="text">
 
-        <div class="panel">
-          <message v-for="unMessage in liste" :mess="unMessage"></message>
 
-        </div>
-
-      </div>
-      
-      <section id="pagination" class="navigation is-fixed-bottom">
-        <hr>
-        <input @keyup.enter="envoyer" v-model="message" class="input is-medium" placeholder="Entrez votre message et appuyez sur entrée" type="text">
-      </section>
-
-    </section>
-  </div>
+  </v-ons-page>
 
 </template>
 
@@ -52,6 +33,7 @@ export default {
   components: {NavBar, Message},
   data () {
     return {
+      state: 'initial',
       liste : [],
       message : '',
     }
@@ -60,7 +42,7 @@ export default {
 
     window.axios.get('channels/'+this.$route.params.id+'/posts').then((response) => {
       this.liste = response.data;
-      setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight); }, 300);
+      setTimeout(function(){ window.scrollTo(0,document.body.scrollHeight); }, 3000);
     }).catch((error) => {
     });
 
@@ -105,7 +87,28 @@ export default {
         
       }).catch((error) => {
       });
+    },
+
+    loadItem(done) {
+      setTimeout(() => {
+        window.bus.$on('updateMessage',() => {
+          window.axios.get('channels/'+this.$route.params.id+'/posts').then((response) => {
+            this.liste = response.data;
+          }).catch((error) => {
+          });
+        });
+        done();
+      }, 400);
     }
+
   },
 }
 </script>
+
+<style>
+.btn {
+  text-decoration: none;
+  border: none;
+  color: black;
+}
+</style>

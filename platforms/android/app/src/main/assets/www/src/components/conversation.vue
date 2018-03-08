@@ -25,21 +25,22 @@
     </span> -->
 
 
-<v-ons-list-item>
-  <div class="left">
-    <v-ons-icon icon="md-face" class="list-item__icon"></v-ons-icon>
-  </div>
-  <div class="center">
-    <router-link :to="{ name:'messages', params : { id : conv._id } }">
-      {{ conv.label }}
+
+
+
+
+
+  <v-ons-list-item>
+
+    <router-link class="btn" :to="{ name:'messages', params : { id : conv._id } }">
+      <strong>{{ conv.label }}</strong>
     </router-link>
-  </div>
-
-  <div class="center">
+    &nbsp;
     {{ conv.topic }}
-  </div>
 
-</v-ons-list-item>
+  </div></v-ons-list-item>
+
+
 
 
 
@@ -69,3 +70,9 @@ export default {
 
 }
 </script>
+
+<style>
+.btn {
+  text-decoration: none;
+}
+</style>

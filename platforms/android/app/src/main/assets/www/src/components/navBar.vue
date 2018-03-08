@@ -2,21 +2,17 @@
 
     <v-ons-toolbar>
       <div class="center">Co'op</div>
-
 <!--
         <v-ons-button style="margin: 6px 0"><router-link class="navbar-item" to="/conversations">Conversations</router-link></v-ons-button>
         <v-ons-button style="margin: 6px 0"><router-link class="navbar-item" to="/members">Membres</router-link></v-ons-button>
         <v-ons-button style="margin: 6px 0" @click="logOut">Se déconnecter</v-ons-button>
-
-
 -->
       <div class="right">
         <v-ons-toolbar-button>
-          <v-ons-icon icon="ion-navicon, material: md-menu"></v-ons-icon>
+          <i class="fas fa-sign-out-alt" @click="logOut"></i>
         </v-ons-toolbar-button>
-
-
       </div>
+
     </v-ons-toolbar>
 
 
@@ -79,6 +75,10 @@ export default {
 
 .is-active .btn {
   margin-left: 10px;
+}
+
+.fas {
+  height: 100px;
 }
 
 </style>

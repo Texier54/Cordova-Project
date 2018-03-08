@@ -1,21 +1,25 @@
 <template>
 
-  <div>
 
+  <v-ons-page>
     <nav-bar></nav-bar>
     <br><br><br>
 
 
-        <a class="button" href="#/newConv"><span class="icon"><i class="icon-comment"></i></span>
-          <span>
-            Nouvelle conversation
-          </span>
-        </a>
 
 
+    <v-ons-list>
+        <v-ons-list-header>Conversations</v-ons-list-header>
       <conversation v-for="uneConv in liste" :conv="uneConv"></conversation>
+    </v-ons-list>
 
+    <a class="btn-plus" href="#/newConv">
+      <ons-fab>
+        <ons-icon icon="md-plus"></ons-icon>
+      </ons-fab>
+    </a>
 
+<!--
       <v-ons-tabbar>
         <router-view slot="pages"></router-view>
         <v-ons-tab v-for="name in ['Conversations', 'Membres']" :key="name"
@@ -23,10 +27,12 @@
           :active="$route.name === name"
           @click.prevent="$router.push({name})"
         ></v-ons-tab>
-      </v-ons-tabbar>
+      </v-ons-tabbar> -->
 
 
-  </div>
+  </v-ons-page>
+
+ 
 
 </template>
 
@@ -60,3 +66,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.btn-plus {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+</style>

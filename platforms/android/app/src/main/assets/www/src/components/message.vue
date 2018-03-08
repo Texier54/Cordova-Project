@@ -1,45 +1,44 @@
 <template>
 
-  <article class="media channel-message">
+  <v-ons-list-item>
 
-    <figure class="media-left">
-      <p class="image is-32x32">
-        <img :src="result">
-      </p>
-    </figure>
+    <div class="left">
+      <img :src="result" class="img">&nbsp;
+    </div>
+
+    <div class="center">
+
+      <span class="list-item__title">
+        <strong>{{ member.fullname }}</strong> &nbsp;
+        <small>{{ member.email }}</small> &nbsp;
+        <span title="2017-12-15T10:56:48.975+01:00" class="date">{{ date }}</span>&nbsp;
 
 
-    <div class="media-content">
-      <strong>{{ member.fullname }}</strong> 
-      <small>{{ member.email }}</small> 
-      <span title="2017-12-15T10:56:48.975+01:00" class="date">{{ date }}</span>
+        <span v-if="ok">
+          <a @click="modifMess">
+            <i class="icon-edit"></i>
+          </a>
+        </span>
+
+        <span v-if="ok">
+          <a @click="suprMess">
+            <i class="icon-trash" > </i>
+          </a>
+        </span>
 
 
-      <span v-if="ok" class="panel-icon">
-        <a @click="modifMess">
-          <i class="icon-edit"></i>
-        </a>
+        <div v-if="editerChannel">
+          <input @keyup.enter="saveMess" v-model="mess.message">
+        </div>
       </span>
 
-      <span v-if="ok" class="panel-icon">
-        <a @click="suprMess">
-          <i class="icon-trash"> </i>
-        </a>
+      <span class="list-item__subtitle" >
+          {{ mess.message }}
       </span>
-
-      <br>
-
-      <div v-if="editerChannel">
-        <input @keyup.enter="saveMess" v-model="mess.message">
-      </div>
-
-      <div v-else>
-        {{ mess.message }}
-      </div>
 
     </div>
 
-  </article>
+  </v-ons-list-item>
 
 </template>
 
@@ -116,3 +115,18 @@ export default {
 
 }
 </script>
+
+<style>
+.img {
+  width: 50px;
+}
+.icon-trash{
+  width: 80%;
+}
+.icon-trash:hover {
+  color: green;
+}
+.icon-edit:hover {
+  color: green;
+}
+</style>
